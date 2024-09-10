@@ -51,15 +51,10 @@ function generateHTML(fileList) {
         border-top: 1px solid #ccc;
         margin: 20px 0;
       }
-      pre {
-        font-size: 13px;
-      }
     </style>
   </head>
   <body>
     <h1>Index of /</h1>
-    <hr>
-    <pre>Name                                    Last modified      Size  Description</pre>
     <hr>
     <ul>
       ${fileLinks}
@@ -110,4 +105,4 @@ async function handleRequest(request) {
 
   // If the path is not found, return a 404
   return new Response('404 Not Found', { status: 404 });
-}
+                               }
