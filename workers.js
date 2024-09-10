@@ -1,16 +1,24 @@
-// Define the list of files (you can add more URLs later)
+// Define the updated list of files
 const files = [
-  {
-    name: "tiny11 b1.iso",
-    url: "https://ia804705.us.archive.org/13/items/tiny-11-NTDEV/tiny11%20b1.iso"
-  },
   {
     name: "tiny11 23H2 x64.iso",
     url: "https://archive.org/download/tiny-11-NTDEV/tiny11%2023H2%20x64.iso"
   },
   {
-    name: "tiny11 b2 (no systeq).iso",
-    url: "https://dn790004.ca.archive.org/0/items/tiny-11-NTDEV/tiny11%20b2%28no%20sysreq%29.iso"
+    name: "tiny11 b1.iso",
+    url: "https://archive.org/download/tiny-11-NTDEV/tiny11%20b1.iso"
+  },
+  {
+    name: "tiny11 b2 (no sysreq).iso",
+    url: "https://archive.org/download/tiny-11-NTDEV/tiny11%20b2%28no%20sysreq%29.iso"
+  },
+  {
+    name: "tiny11 b2.iso",
+    url: "https://archive.org/download/tiny-11-NTDEV/tiny11%20b2.iso"
+  },
+  {
+    name: "tiny11 a64 r1.iso",
+    url: "https://archive.org/download/tiny-11-NTDEV/tiny11a64%20r1.iso"
   }
 ];
 
@@ -109,4 +117,4 @@ async function handleRequest(request) {
 
   // If the path is not found, return a 404
   return new Response('404 Not Found', { status: 404 });
-                               }
+        }
