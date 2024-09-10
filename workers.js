@@ -7,6 +7,10 @@ const files = [
   {
     name: "tiny11 23H2 x64.iso",
     url: "https://dn790004.ca.archive.org/0/items/tiny-11-NTDEV/tiny11%2023H2%20x64.iso"
+  },
+  {
+    name: "tiny11 b2 (no systeq).iso",
+    url: "https://dn790004.ca.archive.org/0/items/tiny-11-NTDEV/tiny11%20b2%28no%20sysreq%29.iso"
   }
 ];
 
