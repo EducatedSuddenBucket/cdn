@@ -102,13 +102,43 @@ async function handleRequest(request) {
       // Get the URL of the requested file
       const fileUrl = files[fileIndex].url;
 
-      // Fetch the file from the original server and stream it through Cloudflare
-      const response = await fetch(fileUrl);
+      // Fetch the file from the original server
+      const fileResponse = await fetch(fileUrl);
+      const { headers } = fileResponse;
+      const contentLength = headers.get('Content-Length');
+      const rangeHeader = request.headers.get('Range');
 
-      // Return the proxied response
-      return new Response(response.body, {
+      // Handle Range requests
+      if (rangeHeader) {
+        const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d+)?/);
+        if (rangeMatch) {
+          const start = parseInt(rangeMatch[1], 10);
+          const end = rangeMatch[2] ? parseInt(rangeMatch[2], 10) : contentLength - 1;
+          const chunkSize = end - start + 1;
+
+          const partialResponse = await fetch(fileUrl, {
+            headers: {
+              Range: `bytes=${start}-${end}`
+            }
+          });
+
+          return new Response(partialResponse.body, {
+            status: 206,
+            headers: {
+              'Content-Type': headers.get('Content-Type') || 'application/octet-stream',
+              'Content-Length': chunkSize,
+              'Content-Range': `bytes ${start}-${end}/${contentLength}`,
+              'Content-Disposition': `attachment; filename="${files[fileIndex].name}"`
+            }
+          });
+        }
+      }
+
+      // If no Range header, return the full file
+      return new Response(fileResponse.body, {
         headers: {
-          'Content-Type': response.headers.get('Content-Type') || 'application/octet-stream',
+          'Content-Type': headers.get('Content-Type') || 'application/octet-stream',
+          'Content-Length': contentLength,
           'Content-Disposition': `attachment; filename="${files[fileIndex].name}"`
         }
       });
